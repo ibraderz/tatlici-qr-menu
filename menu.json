@@ -1,0 +1,262 @@
+[
+  {
+    "category": "Baklavalar",
+    "items": [
+      {
+        "id": 1,
+        "name": "Fıstıklı Mekik Baklava",
+        "desc": "",
+        "price_portion": "120 ₺",
+        "price_kilo": "800 ₺",
+        "image": "images/fistikli-mekik-baklava.jpg",
+        "available": true
+      },
+      {
+        "id": 2,
+        "name": "Fıstıklı Kare Baklava",
+        "desc": "",
+        "price_portion": "150 ₺",
+        "price_kilo": "1000 ₺",
+        "image": "images/kare.png",
+        "available": true
+      },
+      {
+        "id": 3,
+        "name": "Havuç Dilimi",
+        "desc": "",
+        "price_portion": "450 ₺",
+        "price_kilo": "1000 ₺",
+        "image": "images/havuc.png",
+        "available": true
+      },
+      {
+        "id": 4,
+        "name": "Sultan",
+        "desc": "",
+        "price_portion": "150 ₺",
+        "price_kilo": "1000 ₺",
+        "image": "images/sultan.png",
+        "available": true
+      },
+      {
+        "id": 5,
+        "name": "Bülbül Yuvası",
+        "desc": "",
+        "price_portion": "100 ₺",
+        "price_kilo": "450 ₺",
+        "image": "images/bulbul.png",
+        "available": true
+      },
+      {
+        "id": 6,
+        "name": "Cevizli Baklava",
+        "desc": "",
+        "price_portion": "100 ₺",
+        "price_kilo": "450 ₺",
+        "image": "images/cevizli.png",
+        "available": true
+      },
+      {
+        "id": 7,
+        "name": "Şöbiyet",
+        "desc": "",
+        "price_portion": "150 ₺",
+        "price_kilo": "1000 ₺",
+        "image": "images/sobiyet.png",
+        "available": true
+      },
+      {
+        "id": 8,
+        "name": "Midye,
+        "desc": "",
+        "price_portion": "200 ₺",
+        "price_kilo": "1200 ₺",
+        "image": "images/Midye.png",
+        "available": true
+      },
+      {
+        "id": 9,
+        "name": "Soğuk Baklava",
+        "desc": "",
+        "price_portion": "100 ₺",
+        "price_kilo": "900 ₺",
+        "image": "images/soguk-baklava.png",
+        "available": true
+      },
+
+    ]
+  },
+  {
+    "category": "Künefe ve Katmer",
+    "items": [
+      {
+        "id": 11,
+        "name": "Cennet Çamuru",
+        "desc": "",
+        "price_portion": "200 ₺",
+        "price_kilo": "800 ₺",
+        "image": "images/camur.png",
+        "available": true
+      },
+      {
+        "id": 12,
+        "name": "Kilis Katmeri",
+        "desc": "",
+        "price_portion": "200 ₺",
+        "price_kilo": "",
+        "image": "images/katmer.png",
+        "available": true
+      },
+      {
+        "id": 13,
+        "name": "Simit Katmer",
+        "desc": "",
+        "price_portion": "350 ₺",
+        "price_kilo": "",
+        "image": "images/simit-katmer.png",
+        "available": false
+      },
+      {
+        "id": 14,
+        "name": "Muska Katmer",
+        "desc": "",
+        "price_portion": "250 ₺",
+        "price_kilo": "",
+        "image": "images/muska-katmer.png",
+        "available": false
+      },
+      {
+        "id": 15,
+        "name": "Peynirli Künefe",
+        "desc": "",
+        "price_portion": "100 ₺",
+        "price_kilo": "400 ₺",
+        "image": "images/peynirli-kunefe.png",
+        "available": true
+      },
+      {
+        "id": 16,
+        "name": "Fıstıklı Künefe",
+        "desc": "",
+        "price_portion": "200 ₺",
+        "price_kilo": "800 ₺",
+        "image": "images/fistikli-kunefe.png",
+        "available": true
+      },
+
+    ]
+  },
+  {
+    "category": "Kurabiye ve Gerebiç",
+    "items": [
+      {
+        "id": 18,
+        "name": "Fıstıklı Gerebiç",
+        "desc": "",
+        "price_kilo": "1400 ₺",
+        "image": "images/fistikli-gerebic.png",
+        "available": true
+      },
+      {
+        "id": 19,
+        "name": "Cevizli Gerebiç",
+        "desc": "",
+        "price_kilo": "700 ₺",
+        "image": "images/cevizli-gerebic.png",
+        "available": true
+      },
+      {
+        "id": 20,
+        "name": "İrmik Kurabiyesi",
+        "desc": "",
+        "price_kilo": "400 ₺",
+        "image": "images/irmik-kurabiyesi.png",
+        "available": true
+      },
+      {
+        "id": 21,
+        "name": "Fıstıklı İrmik Kurabiyesi",
+        "desc": "",
+        "price_kilo": "800 ₺",
+        "image": "images/fistikli-irmik-kurabiyesi.png",
+        "available": true
+      }
+    ]
+  },
+  {
+    "category": "Dondurmalar",
+    "items": [
+      {
+        "id": 22,
+        "name": "Sade / Meyveli Dondurma",
+        "desc": "",
+        "price_portion": "60 ₺",
+        "price_kilo": "400 ₺",
+        "image": "images/sade-meyveli-dondurma.png",
+        "available": true
+      },
+      {
+        "id": 23,
+        "name": "Fıstıklı Dondurma",
+        "desc": "",
+        "price_portion": "150 ₺",
+        "price_kilo": "1200 ₺",
+        "image": "images/fistikli-dondurma.png",
+        "available": true
+      }
+    ]
+  },
+  {
+    "category": "İçecekler",
+    "items": [
+      {
+        "id": 24,
+        "name": "Kutu İçecekler",
+        "desc": "",
+        "price_single": "55 ₺",
+        "image": "images/kutu-icecekler.png",
+        "available": true
+      },
+      {
+        "id": 25,
+        "name": "Meyveli Soda",
+        "desc": "",
+        "price_single": "25 ₺",
+        "image": "images/meyveli-soda.png",
+        "available": true
+      },
+      {
+        "id": 26,
+        "name": "Sade Soda",
+        "desc": "",
+        "price_single": "20 ₺",
+        "image": "images/sade-soda.png",
+        "available": true
+      },
+      {
+        "id": 27,
+        "name": "Su",
+        "desc": "",
+        "price_single": "15 ₺",
+        "image": "images/su.png",
+        "available": true
+      },
+      {
+        "id": 28,
+        "name": "Kola / Fanta (1L)",
+        "desc": "",
+        "price_single": "70 ₺",
+        "image": "images/kola-fanta-1l.png",
+        "available": true
+      },
+      {
+        "id": 29,
+        "name": "Kola (2.5L)",
+        "desc": "",
+        "price_single": "100 ₺",
+        "image": "images/kola-25l.png",
+        "available": true
+      }
+    ]
+  }
+]

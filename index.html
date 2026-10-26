@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tatlıcılar Baklava 1908 - Çetin Usta</title>
+  <style>
+    :root {
+      --bg: #121212;
+      --card-bg: #1c1c1e;
+      --text-main: #f5f5f7;
+      --text-muted: #a1a1a6;
+      --accent: #d4af37;
+      --badge-out: #ff453a;
+      --border: #2c2c2e;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    body { background-color: var(--bg); color: var(--text-main); padding: 16px 14px 60px; max-width: 600px; margin: 0 auto; }
+    
+    header { text-align: center; margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid var(--border); }
+    header h1 { font-size: 1.4rem; color: var(--accent); letter-spacing: 0.5px; text-transform: uppercase; }
+    header .subtitle { font-size: 0.85rem; color: #fff; font-weight: 600; margin-top: 2px; }
+    header p { font-size: 0.75rem; color: var(--text-muted); margin-top: 4px; }
+
+    .category-title { font-size: 1.15rem; margin: 24px 0 12px; color: var(--accent); border-left: 3px solid var(--accent); padding-left: 8px; font-weight: 700; }
+    
+    .item-card { 
+      background: var(--card-bg); 
+      border-radius: 14px; 
+      padding: 12px; 
+      margin-bottom: 12px; 
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center; 
+      border: 1px solid var(--border); 
+      gap: 12px;
+    }
+
+    .item-info { flex: 1; display: flex; flex-direction: column; justify-content: space-between; min-height: 70px; }
+    .item-name { font-size: 0.95rem; font-weight: 600; line-height: 1.3; }
+    
+    .price-box { margin-top: 8px; font-size: 0.85rem; }
+    .price-tag { color: var(--accent); font-weight: 700; margin-right: 10px; }
+    .price-label { color: var(--text-muted); font-size: 0.75rem; margin-right: 3px; }
+
+    .item-image-wrapper {
+      position: relative;
+      width: 75px;
+      height: 75px;
+      flex-shrink: 0;
+      border-radius: 10px;
+      overflow: hidden;
+      background: #2a2a2c;
+    }
+    .item-img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    .sold-out { opacity: 0.45; }
+    .sold-out-badge {
+      display: inline-block;
+      background: var(--badge-out);
+      color: #fff;
+      font-size: 0.65rem;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 4px;
+      margin-left: 6px;
+      vertical-align: middle;
+    }
+
+    footer { text-align: center; margin-top: 30px; font-size: 0.75rem; color: var(--text-muted); }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Tatlıcılar Baklava 1908</h1>
+    <div class="subtitle">ÇETİN USTA</div>
+    <p>Yüzyıllık Tecrübe</p>
+  </header>
+
+  <main id="menu-container">
+    <p style="text-align: center; color: var(--text-muted); padding-top: 40px;">Menü yükleniyor...</p>
+  </main>
+
+  <footer>
+    <p>* Alerjiniz varsa lütfen ekipten bilgi almayı unutmayın.</p>
+    <p style="margin-top:4px;">@tatlicilarcetinusta</p>
+  </footer>
+
+  <script>
+    fetch('menu.json')
+      .then(res => res.json())
+      .then(data => {
+        const container = document.getElementById('menu-container');
+        container.innerHTML = '';
+
+        data.forEach(group => {
+          const section = document.createElement('div');
+          section.innerHTML = `<h2 class="category-title">${group.category}</h2>`;
+
+          group.items.forEach(item => {
+            const isOut = !item.available;
+            const card = document.createElement('div');
+            card.className = `item-card ${isOut ? 'sold-out' : ''}`;
+            
+            let priceHtml = '';
+            if (item.price_single) {
+              priceHtml = `<span class="price-tag">${item.price_single}</span>`;
+            } else {
+              if (item.price_portion) priceHtml += `<span class="price-label">Porsiyon:</span><span class="price-tag">${item.price_portion}</span>`;
+              if (item.price_kilo) priceHtml += `<span class="price-label">Kilo:</span><span class="price-tag">${item.price_kilo}</span>`;
+            }
+
+            const imageHtml = item.image ? `
+              <div class="item-image-wrapper">
+                <img src="${item.image}" alt="${item.name}" class="item-img" loading="lazy" onerror="this.parentElement.style.display='none'">
+              </div>
+            ` : '';
+
+            card.innerHTML = `
+              <div class="item-info">
+                <div class="item-name">
+                  ${item.name}
+                  ${isOut ? '<span class="sold-out-badge">TÜKENDİ</span>' : ''}
+                </div>
+                <div class="price-box">${priceHtml}</div>
+              </div>
+              ${imageHtml}
+            `;
+            section.appendChild(card);
+          });
+
+          container.appendChild(section);
+        });
+      })
+      .catch(err => {
+        document.getElementById('menu-container').innerHTML = '<p style="text-align:center;">Menü yüklenirken bir sorun oluştu.</p>';
+      });
+  </script>
+</body>
+</html>
