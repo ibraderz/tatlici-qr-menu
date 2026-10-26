@@ -344,29 +344,19 @@
 
     .item-card:hover .item-image-wrapper,
     .item-card:focus-within .item-image-wrapper {
-      transform: scale(1.12);
-      box-shadow: 0 10px 18px var(--shadow-strong);
+      transform: scale(1.08);
+      box-shadow: 0 8px 16px var(--shadow-strong);
       border-color: var(--primary-green);
       z-index: 2;
     }
 
-    .item-card:hover .item-img,
-    .item-card:focus-within .item-img {
-      transform: scale(1.08);
-    }
-
     .item-card.selected .item-image-wrapper {
-      width: 118px;
-      height: 118px;
-      transform: scale(1.12);
+      width: 100px;
+      height: 100px;
+      transform: scale(1.05);
       z-index: 3;
-      box-shadow: 0 12px 22px var(--shadow-strong);
+      box-shadow: 0 10px 20px var(--shadow-strong);
       border-color: var(--primary-green);
-      overflow: visible;
-    }
-
-    .item-card.selected .item-img {
-      transform: scale(1.08);
     }
 
     .sold-out {
@@ -392,6 +382,86 @@
       padding: 40px 16px;
       color: var(--text-muted);
       font-size: 0.95rem;
+    }
+
+    /* Görsel Büyütme Modal (Lightbox) Stilleri */
+    .image-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background-color: rgba(15, 76, 58, 0.85);
+      backdrop-filter: blur(8px);
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .image-modal.show {
+      display: flex;
+      opacity: 1;
+    }
+
+    .modal-content {
+      position: relative;
+      max-width: 90vw;
+      max-height: 80vh;
+      background: var(--card-bg);
+      border-radius: 16px;
+      padding: 12px;
+      border: 2px solid var(--accent-gold);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transform: scale(0.8);
+      transition: transform 0.3s ease;
+    }
+
+    .image-modal.show .modal-content {
+      transform: scale(1);
+    }
+
+    .modal-img {
+      max-width: 100%;
+      max-height: 65vh;
+      object-fit: contain;
+      border-radius: 10px;
+    }
+
+    .modal-caption {
+      margin-top: 12px;
+      font-family: 'Lora', serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--primary-green);
+      text-align: center;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: -16px;
+      right: -16px;
+      background: var(--badge-out);
+      color: #fff;
+      border: 2px solid #fff;
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      font-size: 1.2rem;
+      font-weight: bold;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+      transition: transform 0.2s ease;
+    }
+
+    .modal-close:active {
+      transform: scale(0.9);
     }
 
     footer {
@@ -420,8 +490,8 @@
       }
 
       .item-card.selected .item-image-wrapper {
-        width: 96px;
-        height: 96px;
+        width: 86px;
+        height: 86px;
       }
     }
   </style>
@@ -462,6 +532,15 @@
   </div>
 
   <main id="menu-container" aria-live="polite" aria-atomic="true"></main>
+
+  <!-- Görsel Büyütme Modalı -->
+  <div id="image-modal" class="image-modal" role="dialog" aria-modal="true">
+    <div class="modal-content">
+      <button class="modal-close" id="modal-close" aria-label="Kapat">×</button>
+      <img id="modal-img" src="" alt="" class="modal-img">
+      <div id="modal-caption" class="modal-caption"></div>
+    </div>
+  </div>
 
   <footer>
     <div class="instagram-handle">@tatlicilarcetinusta</div>
@@ -543,6 +622,21 @@
       });
     }
 
+    function openModal(imageSrc, title) {
+      const modal = document.getElementById('image-modal');
+      const modalImg = document.getElementById('modal-img');
+      const modalCaption = document.getElementById('modal-caption');
+
+      modalImg.src = imageSrc;
+      modalCaption.textContent = title;
+      modal.classList.add('show');
+    }
+
+    function closeModal() {
+      const modal = document.getElementById('image-modal');
+      modal.classList.remove('show');
+    }
+
     function renderMenu() {
       const container = document.getElementById('menu-container');
       container.innerHTML = '';
@@ -571,8 +665,13 @@
           card.setAttribute('aria-label', `${item.name} ${isSelected ? 'seçili' : 'seçim için'}`);
 
           const handleSelect = () => {
-            selectedItemId = Number(item.id);
-            renderMenu();
+            if (selectedItemId === Number(item.id)) {
+              // Zaten seçiliyse veya resme basıldıysa büyük modali aç
+              if (item.image) openModal(item.image, item.name);
+            } else {
+              selectedItemId = Number(item.id);
+              renderMenu();
+            }
           };
 
           card.addEventListener('click', handleSelect);
@@ -624,6 +723,16 @@
             ${imageHtml}
           `;
 
+          // Görsele özel tıklama olayında doğrudan büyütmeyi tetikle
+          const imgWrapper = card.querySelector('.item-image-wrapper');
+          if (imgWrapper) {
+            imgWrapper.addEventListener('click', (e) => {
+              e.stopPropagation(); // Kart tıklama olayının iki kere tetiklenmesini engeller
+              selectedItemId = Number(item.id);
+              openModal(item.image, item.name);
+            });
+          }
+
           section.appendChild(card);
         });
 
@@ -641,6 +750,8 @@
     document.addEventListener('DOMContentLoaded', () => {
       const searchInput = document.getElementById('search-input');
       const clearSearchBtn = document.getElementById('clear-search');
+      const modal = document.getElementById('image-modal');
+      const modalClose = document.getElementById('modal-close');
 
       document.querySelectorAll('.tab-btn').forEach(button => {
         button.addEventListener('click', () => filterCategory(button.dataset.category, button));
@@ -656,6 +767,16 @@
         searchInput.value = '';
         renderMenu();
         searchInput.focus();
+      });
+
+      // Modal kapatma olayları
+      modalClose.addEventListener('click', closeModal);
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) closeModal();
+      });
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeModal();
       });
 
       renderMenu();
