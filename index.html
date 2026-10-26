@@ -197,6 +197,8 @@
       gap: 12px;
       box-shadow: 0 4px 12px rgba(15, 76, 58, 0.05);
       transition: transform 0.15s ease;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
     }
 
     .item-card:active {
@@ -259,6 +261,8 @@
       border-radius: 10px;
       overflow: hidden;
       border: 1px solid var(--accent-gold);
+      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+      transform-origin: center center;
     }
 
     .item-img { 
@@ -266,6 +270,20 @@
       height: 100%; 
       object-fit: cover; 
       display: block; 
+      transition: transform 0.25s ease;
+    }
+
+    .item-card:active .item-image-wrapper,
+    .item-card:hover .item-image-wrapper {
+      transform: scale(1.18);
+      box-shadow: 0 10px 18px rgba(15, 76, 58, 0.18);
+      border-color: var(--primary-green);
+      z-index: 2;
+    }
+
+    .item-card:active .item-img,
+    .item-card:hover .item-img {
+      transform: scale(1.08);
     }
 
     /* Tükendi Durumu */
