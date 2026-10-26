@@ -253,8 +253,10 @@
       border: 1px solid rgba(201, 162, 39, 0.2);
       gap: 12px;
       box-shadow: 0 4px 12px var(--shadow-soft);
-      transition: transform 0.15s ease, box-shadow 0.15s ease;
+      transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.2s ease;
       -webkit-tap-highlight-color: transparent;
+      cursor: pointer;
+      position: relative;
     }
 
     .item-card:active {
@@ -263,6 +265,11 @@
 
     .item-card:hover {
       box-shadow: 0 6px 16px var(--shadow-soft);
+    }
+
+    .item-card.selected {
+      border-color: var(--primary-green);
+      box-shadow: 0 8px 22px rgba(15, 76, 58, 0.12);
     }
 
     .item-info {
@@ -320,8 +327,9 @@
       border-radius: 10px;
       overflow: hidden;
       border: 1px solid var(--accent-gold);
-      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease, width 0.2s ease, height 0.2s ease;
       transform-origin: center center;
+      background: var(--bg-cream);
     }
 
     .item-img {
@@ -343,6 +351,19 @@
     .item-card:hover .item-img,
     .item-card:focus-within .item-img {
       transform: scale(1.08);
+    }
+
+    .item-card.selected .item-image-wrapper {
+      width: 110px;
+      height: 110px;
+      transform: scale(1.14);
+      z-index: 2;
+      box-shadow: 0 12px 22px var(--shadow-strong);
+      border-color: var(--primary-green);
+    }
+
+    .item-card.selected .item-img {
+      transform: scale(1.12);
     }
 
     .sold-out {
@@ -393,6 +414,11 @@
       .item-image-wrapper {
         width: 68px;
         height: 68px;
+      }
+
+      .item-card.selected .item-image-wrapper {
+        width: 88px;
+        height: 88px;
       }
     }
   </style>
@@ -498,6 +524,7 @@
 
     let activeCat = 'ALL';
     let searchQuery = '';
+    let selectedItemId = null;
 
     function normalizeText(value = '') {
       return value
@@ -533,8 +560,25 @@
 
         filteredItemsForGroup(group).forEach(item => {
           const isOut = !item.available;
+          const isSelected = Number(selectedItemId) === Number(item.id);
           const card = document.createElement('div');
-          card.className = `item-card ${isOut ? 'sold-out' : ''}`;
+          card.className = `item-card ${isOut ? 'sold-out' : ''} ${isSelected ? 'selected' : ''}`;
+          card.tabIndex = 0;
+          card.setAttribute('role', 'button');
+          card.setAttribute('aria-label', `${item.name} ${isSelected ? 'seçili' : 'seçim için'}`);
+
+          const handleSelect = () => {
+            selectedItemId = Number(item.id);
+            renderMenu();
+          };
+
+          card.addEventListener('click', handleSelect);
+          card.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter' || event.key === ' ') {
+              event.preventDefault();
+              handleSelect();
+            }
+          });
 
           let priceHtml = '';
 
