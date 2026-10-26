@@ -3,86 +3,331 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title> Çetin Usta - Tatlıcılar Baklava </title>
-  <style>
-    :root {
-      --bg: #121212;
-      --card-bg: #1c1c1e;
-      --text-main: #f5f5f7;
-      --text-muted: #a1a1a6;
-      --accent: #d4af37;
-      --badge-out: #ff453a;
-      --border: #2c2c2e;
-    }
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
-    body { background-color: var(--bg); color: var(--text-main); padding: 16px 14px 60px; max-width: 600px; margin: 0 auto; }
-    
-    header { text-align: center; margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid var(--border); }
-    header h1 { font-size: 1.4rem; color: var(--accent); letter-spacing: 0.5px; text-transform: uppercase; }
-    header .subtitle { font-size: 0.85rem; color: #fff; font-weight: 600; margin-top: 2px; }
-    header p { font-size: 0.75rem; color: var(--text-muted); margin-top: 4px; }
+  <title>Tatlıcılar Baklava 1908 - Çetin Usta Dijital QR Menü</title>
 
-    .category-title { font-size: 1.15rem; margin: 24px 0 12px; color: var(--accent); border-left: 3px solid var(--accent); padding-left: 8px; font-weight: 700; }
+  <!-- Google Fonts: Lora (Ana Font), Cormorant SC (Detay Font), Plus Jakarta Sans (Gövde) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+SC:wght@600;700&family=Lora:ital,wght@0,600;0,700;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* Tatlıcılar Çetin Usta Kurumsal Renk Paleti */
+    :root {
+      --primary-green: #0f4c3a;   /* Deep Teal / Forest Green */
+      --accent-gold: #c9a227;     /* Golden Yellow */
+      --bg-cream: #f8f2e8;        /* Warm Cream / Cream White */
+      --text-dark: #1e1e1e;       /* Soft Black */
+      --text-muted: #666d75;
+      --card-bg: #ffffff;
+      --border-soft: rgba(201, 162, 39, 0.25);
+      --badge-out: #d9383a;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
     
+    body { 
+      background-color: var(--bg-cream); 
+      background-image: radial-gradient(circle at top, #ffffff 0%, #f8f2e8 100%);
+      color: var(--text-dark); 
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      padding: 16px 14px 60px; 
+      max-width: 540px; 
+      margin: 0 auto; 
+      min-height: 100vh;
+    }
+    
+    /* Header & Marka Kimliği */
+    header { 
+      text-align: center; 
+      margin-bottom: 20px; 
+      padding-bottom: 16px; 
+      position: relative;
+    }
+
+    .logo-container {
+      width: 96px;
+      height: 96px;
+      margin: 0 auto 12px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent-gold) 0%, var(--primary-green) 100%);
+      padding: 3px;
+      box-shadow: 0 6px 20px rgba(15, 76, 58, 0.15);
+    }
+
+    .logo-img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      border-radius: 50%;
+      background-color: var(--bg-cream);
+      display: block;
+    }
+
+    header h1 { 
+      font-family: 'Lora', serif;
+      font-size: 1.45rem; 
+      font-weight: 700;
+      color: var(--primary-green);
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    .header-year {
+      font-family: 'Lora', serif;
+      font-style: italic;
+      color: var(--accent-gold);
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin: 2px 0;
+    }
+
+    header .subtitle { 
+      font-family: 'Cormorant SC', serif;
+      font-size: 1.15rem; 
+      color: var(--primary-green); 
+      font-weight: 700; 
+      letter-spacing: 2px;
+    }
+
+    header .tagline { 
+      font-family: 'Cormorant SC', serif;
+      font-size: 0.8rem; 
+      color: var(--accent-gold); 
+      margin-top: 4px; 
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+
+    .divider {
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--accent-gold), transparent);
+      margin: 14px auto 0;
+      width: 70%;
+      opacity: 0.6;
+    }
+
+    /* Arama Barı ve Kategori Filtreleri */
+    .controls-wrapper {
+      position: sticky;
+      top: 10px;
+      z-index: 100;
+      background: rgba(248, 242, 232, 0.95);
+      backdrop-filter: blur(8px);
+      padding: 8px 0;
+      margin-bottom: 16px;
+      border-radius: 12px;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 10px 14px;
+      border-radius: 25px;
+      border: 1px solid var(--border-soft);
+      background: #ffffff;
+      font-size: 0.85rem;
+      color: var(--text-dark);
+      outline: none;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      margin-bottom: 10px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    .search-input:focus {
+      border-color: var(--accent-gold);
+    }
+
+    .category-tabs {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+      scrollbar-width: none;
+    }
+    .category-tabs::-webkit-scrollbar { display: none; }
+
+    .tab-btn {
+      white-space: nowrap;
+      padding: 6px 14px;
+      border-radius: 20px;
+      background: #ffffff;
+      border: 1px solid var(--border-soft);
+      color: var(--primary-green);
+      font-family: 'Cormorant SC', serif;
+      font-weight: 700;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .tab-btn.active {
+      background: var(--primary-green);
+      color: var(--bg-cream);
+      border-color: var(--primary-green);
+    }
+
+    /* Kategori Başlıkları */
+    .category-title { 
+      font-family: 'Lora', serif;
+      font-size: 1.2rem; 
+      margin: 24px 0 12px; 
+      color: var(--primary-green); 
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .category-title::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, var(--accent-gold), transparent);
+    }
+    
+    /* Ürün Kartı */
     .item-card { 
       background: var(--card-bg); 
       border-radius: 14px; 
       padding: 12px; 
-      margin-bottom: 12px; 
+      margin-bottom: 10px; 
       display: flex; 
       justify-content: space-between; 
       align-items: center; 
-      border: 1px solid var(--border); 
+      border: 1px solid rgba(201, 162, 39, 0.2); 
       gap: 12px;
+      box-shadow: 0 4px 12px rgba(15, 76, 58, 0.05);
+      transition: transform 0.15s ease;
     }
 
-    .item-info { flex: 1; display: flex; flex-direction: column; justify-content: space-between; min-height: 70px; }
-    .item-name { font-size: 0.95rem; font-weight: 600; line-height: 1.3; }
-    
-    .price-box { margin-top: 8px; font-size: 0.85rem; }
-    .price-tag { color: var(--accent); font-weight: 700; margin-right: 10px; }
-    .price-label { color: var(--text-muted); font-size: 0.75rem; margin-right: 3px; }
+    .item-card:active {
+      transform: scale(0.99);
+    }
 
+    .item-info { 
+      flex: 1; 
+      display: flex; 
+      flex-direction: column; 
+      justify-content: space-between; 
+      min-height: 70px; 
+    }
+
+    .item-name { 
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.95rem; 
+      font-weight: 700; 
+      color: var(--text-dark);
+      line-height: 1.3;
+    }
+    
+    .price-box { 
+      margin-top: 8px; 
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .price-badge {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      background: var(--bg-cream);
+      padding: 3px 8px;
+      border-radius: 6px;
+      border: 1px solid var(--border-soft);
+    }
+
+    .price-label { 
+      font-family: 'Cormorant SC', serif;
+      color: var(--primary-green); 
+      font-size: 0.75rem; 
+      font-weight: 700;
+    }
+
+    .price-tag { 
+      color: var(--accent-gold); 
+      font-weight: 700; 
+      font-size: 0.9rem;
+    }
+
+    /* Görsel Alanı */
     .item-image-wrapper {
       position: relative;
-      width: 75px;
-      height: 75px;
+      width: 76px;
+      height: 76px;
       flex-shrink: 0;
       border-radius: 10px;
       overflow: hidden;
-      background: #2a2a2c;
+      border: 1px solid var(--accent-gold);
     }
-    .item-img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
-    .sold-out { opacity: 0.45; }
+    .item-img { 
+      width: 100%; 
+      height: 100%; 
+      object-fit: cover; 
+      display: block; 
+    }
+
+    /* Tükendi Durumu */
+    .sold-out { 
+      opacity: 0.5; 
+      filter: grayscale(80%);
+    }
+
     .sold-out-badge {
       display: inline-block;
       background: var(--badge-out);
       color: #fff;
-      font-size: 0.65rem;
+      font-size: 0.6rem;
       font-weight: 700;
       padding: 2px 6px;
       border-radius: 4px;
       margin-left: 6px;
       vertical-align: middle;
+      font-family: 'Cormorant SC', serif;
     }
 
-    footer { text-align: center; margin-top: 30px; font-size: 0.75rem; color: var(--text-muted); }
+    footer { 
+      text-align: center; 
+      margin-top: 36px; 
+      font-size: 0.75rem; 
+      color: var(--text-muted); 
+      border-top: 1px solid var(--border-soft);
+      padding-top: 16px;
+    }
   </style>
 </head>
 <body>
 
   <header>
-    <h1>Tatlıcılar Baklava 1908</h1>
+    <div class="logo-container">
+      <img src="images/logo.png" alt="Tatlıcılar Baklava Logo" class="logo-img" onerror="this.src='https://placehold.co/100x100/0f4c3a/c9a227?text=ÇETİN+USTA'">
+    </div>
+    <h1>Tatlıcılar Baklava</h1>
+    <div class="header-year">1908</div>
     <div class="subtitle">ÇETİN USTA</div>
-    <p>Yüzyıllık Tecrübe</p>
+    <div class="tagline">Yüzyıllık Tecrübe</div>
+    <div class="divider"></div>
   </header>
+
+  <!-- Filtre & Arama -->
+  <div class="controls-wrapper">
+    <input type="text" id="search-input" class="search-input" placeholder="Ürün ara... (ör. Baklava, Katmer, Dondurma)">
+    <div class="category-tabs" id="category-tabs">
+      <button class="tab-btn active" onclick="filterCategory('ALL', this)">Tümü</button>
+      <button class="tab-btn" onclick="filterCategory('Baklavalar', this)">Baklavalar</button>
+      <button class="tab-btn" onclick="filterCategory('Künefe ve Katmer', this)">Künefe & Katmer</button>
+      <button class="tab-btn" onclick="filterCategory('Kurabiye ve Gerebiç', this)">Kurabiye & Gerebiç</button>
+      <button class="tab-btn" onclick="filterCategory('Dondurmalar', this)">Dondurmalar</button>
+      <button class="tab-btn" onclick="filterCategory('İçecekler', this)">İçecekler</button>
+    </div>
+  </div>
 
   <main id="menu-container"></main>
 
   <footer>
     <p>* Alerjiniz varsa lütfen ekipten bilgi almayı unutmayın.</p>
-    <p style="margin-top:4px;">@tatlicilarcetinusta</p>
+    <p style="margin-top:6px; color: var(--primary-green); font-weight:700;">@tatlicilarcetinusta</p>
   </footer>
 
   <script>
@@ -90,98 +335,152 @@
       {
         "category": "Baklavalar",
         "items": [
-          { "id": 1, "name": "Fıstıklı Mekik Baklava", "price_portion": "120 ₺", "price_kilo": "800 ₺", "image": "images/fistikli-mekik-baklava.jpg", "available": true },
+          { "id": 1, "name": "Fıstıklı Mekik Baklava", "price_portion": "120 ₺", "price_kilo": "800 ₺", "image": "images/midye.png", "available": true },
           { "id": 2, "name": "Fıstıklı Kare Baklava", "price_portion": "150 ₺", "price_kilo": "1000 ₺", "image": "images/kare.png", "available": true },
           { "id": 3, "name": "Havuç Dilimi", "price_portion": "450 ₺", "price_kilo": "1000 ₺", "image": "images/havuc.png", "available": true },
           { "id": 4, "name": "Sultan", "price_portion": "150 ₺", "price_kilo": "1000 ₺", "image": "images/sultan.png", "available": true },
           { "id": 5, "name": "Bülbül Yuvası", "price_portion": "100 ₺", "price_kilo": "450 ₺", "image": "images/bulbul.png", "available": true },
           { "id": 6, "name": "Cevizli Baklava", "price_portion": "100 ₺", "price_kilo": "450 ₺", "image": "images/cevizli.png", "available": true },
-          { "id": 7, "name": "Şöbiyet", "price_portion": "150 ₺", "price_kilo": "1000 ₺", "image": "images/sobiyet.jpg", "available": false },
-          { "id": 8, "name": "Midye", "price_portion": "150 ₺", "price_kilo": "1000 ₺", "image": "images/midye.png", "available": true },
-          { "id": 9, "name": "Soğuk Baklava", "price_portion": "100 ₺", "price_kilo": "900 ₺", "image": "images/soguk-baklava.jpg", "available": false }
+          { "id": 7, "name": "Şöbiyet", "price_portion": "150 ₺", "price_kilo": "1000 ₺", "image": "images/sobiyet.png", "available": true },
+          { "id": 8, "name": "Fıstık Sarma", "price_portion": "200 ₺", "price_kilo": "1200 ₺", "image": "images/fistik-sarma.png", "available": true },
+          { "id": 9, "name": "Soğuk Baklava", "price_portion": "100 ₺", "price_kilo": "900 ₺", "image": "images/soguk-baklava.png", "available": true },
+          { "id": 10, "name": "Kuru Baklava", "price_portion": "450 ₺", "price_kilo": "450 ₺", "image": "images/kuru-baklava.png", "available": true }
         ]
       },
       {
         "category": "Künefe ve Katmer",
         "items": [
-          { "id": 11, "name": "Cennet Çamuru", "price_portion": "200 ₺", "price_kilo": "800 ₺", "image": "images/cennet-camuru.jpg", "available": true },
-          { "id": 12, "name": "Kilis Katmeri", "price_portion": "200 ₺", "price_kilo": "", "image": "images/kilis-katmeri.jpg", "available": true },
-          { "id": 13, "name": "Simit Katmer", "price_portion": "350 ₺", "price_kilo": "", "image": "images/simit-katmer.jpg", "available": false },
-          { "id": 14, "name": "Muska Katmer", "price_portion": "250 ₺", "price_kilo": "", "image": "images/muska-katmer.jpg", "available": false },
-          { "id": 15, "name": "Peynirli Künefe", "price_portion": "100 ₺", "price_kilo": "400 ₺", "image": "images/peynirli-kunefe.jpg", "available": true },
-          { "id": 16, "name": "Fıstıklı Künefe", "price_portion": "200 ₺", "price_kilo": "800 ₺", "image": "images/fistikli-kunefe.jpg", "available": true },
-          { "id": 17, "name": "Fıstıklı Burma Kadayıf", "price_portion": "160 ₺", "price_kilo": "160 ₺", "image": "images/fistikli-burma-kadayif.jpg", "available": false }
+          { "id": 11, "name": "Cennet Çamuru", "price_portion": "200 ₺", "price_kilo": "800 ₺", "image": "images/camur.png", "available": true },
+          { "id": 12, "name": "Kilis Katmeri", "price_portion": "200 ₺", "price_kilo": "", "image": "images/katmer.png", "available": true },
+          { "id": 13, "name": "Simit Katmer", "price_portion": "350 ₺", "price_kilo": "", "image": "images/simit-katmer.png", "available": true },
+          { "id": 14, "name": "Muska Katmer", "price_portion": "250 ₺", "price_kilo": "", "image": "images/muska-katmer.png", "available": true },
+          { "id": 15, "name": "Peynirli Künefe", "price_portion": "100 ₺", "price_kilo": "400 ₺", "image": "images/peynirli-kunefe.png", "available": true },
+          { "id": 16, "name": "Fıstıklı Künefe", "price_portion": "200 ₺", "price_kilo": "800 ₺", "image": "images/fistikli-kunefe.png", "available": true },
+          { "id": 17, "name": "Fıstıklı Burma Kadayıf", "price_portion": "160 ₺", "price_kilo": "160 ₺", "image": "images/burma-kadayif.png", "available": true }
         ]
       },
       {
         "category": "Kurabiye ve Gerebiç",
         "items": [
-          { "id": 18, "name": "Fıstıklı Gerebiç", "price_kilo": "1400 ₺", "image": "images/fistikli-gerebic.jpg", "available": true },
-          { "id": 19, "name": "Cevizli Gerebiç", "price_kilo": "700 ₺", "image": "images/cevizli-gerebic.jpg", "available": true },
-          { "id": 20, "name": "İrmik Kurabiyesi", "price_kilo": "400 ₺", "image": "images/irmik-kurabiyesi.jpg", "available": true },
-          { "id": 21, "name": "Fıstıklı İrmik Kurabiyesi", "price_kilo": "800 ₺", "image": "images/fistikli-irmik-kurabiyesi.jpg", "available": false }
+          { "id": 18, "name": "Fıstıklı Gerebiç", "price_kilo": "1400 ₺", "image": "images/fistikli-gerebic.png", "available": true },
+          { "id": 19, "name": "Cevizli Gerebiç", "price_kilo": "700 ₺", "image": "images/cevizli-gerebic.png", "available": true },
+          { "id": 20, "name": "İrmik Kurabiyesi", "price_kilo": "400 ₺", "image": "images/irmik-kurabiyesi.png", "available": true },
+          { "id": 21, "name": "Fıstıklı İrmik Kurabiyesi", "price_kilo": "800 ₺", "image": "images/fistikli-irmik-kurabiyesi.png", "available": true }
         ]
       },
       {
         "category": "Dondurmalar",
         "items": [
-          { "id": 22, "name": "Sade / Meyveli Dondurma", "price_portion": "60 ₺", "price_kilo": "400 ₺", "image": "images/sade-meyveli-dondurma.jpg", "available": true },
-          { "id": 23, "name": "Fıstıklı Dondurma", "price_portion": "150 ₺", "price_kilo": "1200 ₺", "image": "images/fistikli-dondurma.jpg", "available": true }
+          { "id": 22, "name": "Sade / Meyveli Dondurma", "price_portion": "60 ₺", "price_kilo": "400 ₺", "image": "images/sade-dondurma.png", "available": true },
+          { "id": 23, "name": "Fıstıklı Dondurma", "price_portion": "150 ₺", "price_kilo": "1200 ₺", "image": "images/fistikli-dondurma.png", "available": true }
         ]
       },
       {
         "category": "İçecekler",
         "items": [
-          { "id": 24, "name": "Kutu İçecekler(Kola, Fanta, İce Tea, Meyve Suyu)", "price_single": "60 ₺", "image": "images/kutu-icecekler.jpg", "available": true },
-          { "id": 25, "name": "Meyveli Soda", "price_single": "25 ₺", "image": "images/meyveli-soda.jpg", "available": true },
-          { "id": 26, "name": "Sade Soda", "price_single": "20 ₺", "image": "images/sade-soda.jpg", "available": true },
-          { "id": 27, "name": "Su", "price_single": "15 ₺", "image": "images/su.jpg", "available": true },
-          { "id": 28, "name": "Kola / Fanta (1L)", "price_single": "70 ₺", "image": "images/kola-fanta-1l.jpg", "available": true },
-          { "id": 29, "name": "Kola (2.5L)", "price_single": "100 ₺", "image": "images/kola-25l.jpg", "available": true }
+          { "id": 24, "name": "Kutu İçecekler", "price_single": "55 ₺", "image": "images/kutu-icecekler.png", "available": true },
+          { "id": 25, "name": "Meyveli Soda", "price_single": "25 ₺", "image": "images/meyveli-soda.png", "available": true },
+          { "id": 26, "name": "Sade Soda", "price_single": "20 ₺", "image": "images/sade-soda.png", "available": true },
+          { "id": 27, "name": "Su", "price_single": "15 ₺", "image": "images/su.png", "available": true },
+          { "id": 28, "name": "Kola / Fanta (1L)", "price_single": "70 ₺", "image": "images/kola-1l.png", "available": true },
+          { "id": 29, "name": "Kola (2.5L)", "price_single": "100 ₺", "image": "images/kola-2l.png", "available": true }
         ]
       }
     ];
 
-    const container = document.getElementById('menu-container');
+    let activeCat = 'ALL';
+    let searchQuery = '';
 
-    menuData.forEach(group => {
-      const section = document.createElement('div');
-      section.innerHTML = `<h2 class="category-title">${group.category}</h2>`;
+    function renderMenu() {
+      const container = document.getElementById('menu-container');
+      container.innerHTML = '';
 
-      group.items.forEach(item => {
-        const isOut = !item.available;
-        const card = document.createElement('div');
-        card.className = `item-card ${isOut ? 'sold-out' : ''}`;
-        
-        let priceHtml = '';
-        if (item.price_single) {
-          priceHtml = `<span class="price-tag">${item.price_single}</span>`;
-        } else {
-          if (item.price_portion) priceHtml += `<span class="price-label">Porsiyon:</span><span class="price-tag">${item.price_portion}</span>`;
-          if (item.price_kilo) priceHtml += `<span class="price-label">Kilo:</span><span class="price-tag">${item.price_kilo}</span>`;
-        }
+      menuData.forEach(group => {
+        if (activeCat !== 'ALL' && group.category !== activeCat) return;
 
-        const imageHtml = item.image ? `
-          <div class="item-image-wrapper">
-            <img src="${item.image}" alt="${item.name}" class="item-img" loading="lazy" onerror="this.parentElement.style.display='none'">
-          </div>
-        ` : '';
+        const filteredItems = group.items.filter(item => 
+          item.name.toLowerCase().includes(searchQuery.toLowerCase())
+        );
 
-        card.innerHTML = `
-          <div class="item-info">
-            <div class="item-name">
-              ${item.name}
-              ${isOut ? '<span class="sold-out-badge">TÜKENDİ</span>' : ''}
+        if (filteredItems.length === 0) return;
+
+        const section = document.createElement('div');
+        section.innerHTML = `<h2 class="category-title">${group.category}</h2>`;
+
+        filteredItems.forEach(item => {
+          const isOut = !item.available;
+          const card = document.createElement('div');
+          card.className = `item-card ${isOut ? 'sold-out' : ''}`;
+          
+          let priceHtml = '';
+          if (item.price_single) {
+            priceHtml = `
+              <div class="price-badge">
+                <span class="price-tag">${item.price_single}</span>
+              </div>`;
+          } else {
+            if (item.price_portion) {
+              priceHtml += `
+                <div class="price-badge">
+                  <span class="price-label">Por:</span>
+                  <span class="price-tag">${item.price_portion}</span>
+                </div>`;
+            }
+            if (item.price_kilo) {
+              priceHtml += `
+                <div class="price-badge">
+                  <span class="price-label">Kg:</span>
+                  <span class="price-tag">${item.price_kilo}</span>
+                </div>`;
+            }
+          }
+
+          const imageHtml = item.image ? `
+            <div class="item-image-wrapper">
+              <img src="${item.image}" alt="${item.name}" class="item-img" loading="lazy" onerror="this.parentElement.style.display='none'">
             </div>
-            <div class="price-box">${priceHtml}</div>
-          </div>
-          ${imageHtml}
-        `;
-        section.appendChild(card);
+          ` : '';
+
+          card.innerHTML = `
+            <div class="item-info">
+              <div class="item-name">
+                ${item.name}
+                ${isOut ? '<span class="sold-out-badge">TÜKENDİ</span>' : ''}
+              </div>
+              <div class="price-box">${priceHtml}</div>
+            </div>
+            ${imageHtml}
+          `;
+          section.appendChild(card);
+        });
+
+        container.appendChild(section);
       });
 
-      container.appendChild(section);
+      if (container.innerHTML === '') {
+        container.innerHTML = '<p style="text-align:center; padding: 40px; color: var(--text-muted);">Aramanıza uygun ürün bulunamadı.</p>';
+      }
+    }
+
+    function filterCategory(cat, btn) {
+      activeCat = cat;
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderMenu();
+    }
+
+    document.getElementById('search-input').addEventListener('input', (e) => {
+      searchQuery = e.target.value;
+      renderMenu();
     });
+
+    renderMenu();
   </script>
 </body>
 </html>
+```
+
+### Yapılan Güncellemeler:
+1. **Renk Kodları:** Resmi dükkan paletine (`#0f4c3a` Orman Yeşili, `#c9a227` Altın Sarısı, `#f8f2e8` Krem Zemin, `#1e1e1e` Yumuşak Siyah) birebir eşlendi.
+2. **Tipografi:** Ana başlıklarda **Lora**, vurgularda ve alt yazılarda **Cormorant SC**, gövde metinlerinde ise **Plus Jakarta Sans** kullanıldı.
+3. **Ekstra Özellikler:** Mobil menü kullanımını kolaylaştırmak için üst kısma **kategori sekmeleri** ve **canlı ürün arama barı** eklendi.
