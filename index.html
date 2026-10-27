@@ -616,10 +616,12 @@
     }
 
     function filteredItemsForGroup(group) {
-      return group.items.filter(item => {
-        const haystack = normalizeText(`${item.name} ${group.category}`);
-        return haystack.includes(normalizeText(searchQuery));
-      });
+      return [...group.items]
+        .filter(item => {
+          const haystack = normalizeText(`${item.name} ${group.category}`);
+          return haystack.includes(normalizeText(searchQuery));
+        })
+        .sort((a, b) => Number(b.available) - Number(a.available));
     }
 
     function openModal(imageSrc, title) {
